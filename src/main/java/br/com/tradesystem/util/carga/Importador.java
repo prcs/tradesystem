@@ -1,27 +1,42 @@
 package br.com.tradesystem.util.carga;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.data.mongodb.core.MongoOperations;
 
-public class Importador {
+import br.com.tradesystem.repositorio.OHLCRepositorio;
+import br.com.tradesystem.util.conexao.MongoConfigConexao;
+
+@SpringBootApplication
+@Configuration
+@ComponentScan
+@EnableAutoConfiguration
+@ImportResource("classpath:SpringConfig.xml")
+public class Importador implements CommandLineRunner {
 		
+	
+	@Autowired 
+	OHLCRepositorio repo;	
+	
+	
 	public static void main(String[] args) {
+		
+		SpringApplication.run(Importador.class, args);
+	}
+	
+	@Override
+	public void run(String... args) throws Exception {
 		 
-		try (BufferedReader br = new BufferedReader(new FileReader("H:\\Historico Bovespa\\DemoCotacoesHistoricas12022003.txt")))
-		{
- 
-			String sCurrentLine;
- 
-			while ((sCurrentLine = br.readLine()) != null) {
-				
-				System.out.println(sCurrentLine.substring(2, 9));
-			}
- 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
- 
+		repo.teste();
+		
+		
+			
 	}
 
 }
